@@ -16,7 +16,10 @@ on:
       name:
         description: "spec file"
         required: true
-        default: "gb"
+        default: "scrap-gb"
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: "*/15 * * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
