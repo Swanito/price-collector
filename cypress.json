@@ -1,0 +1,7 @@
+{
+    "projectId": "v6jo48",
+    "video": false,
+    "env": {
+        "MONGODB_URI": "mongodb://localhost:27017/testdb"
+      }
+}
