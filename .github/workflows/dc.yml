@@ -41,7 +41,5 @@ jobs:
         timeout-minutes: 15
         uses: cypress-io/github-action@v2
         with:
-          browser: chrome
-          headless: true
           spec: cypress/integration/scrap-dc.js
         continue-on-error: true
