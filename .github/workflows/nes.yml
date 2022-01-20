@@ -43,5 +43,5 @@ jobs:
         with:
           browser: chrome
           headless: true
-          spec: cypress/integration/${{ github.event.inputs.name.default }}.js
+          spec: cypress/integration/scrap-nes.js
         continue-on-error: true
