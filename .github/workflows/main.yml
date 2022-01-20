@@ -14,13 +14,9 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: "Person to greet"
+        description: "spec file"
         required: true
-        default: "Mona the Octocat"
-      home:
-        description: "location"
-        required: false
-        default: "The Octoverse"
+        default: "gb"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -44,5 +40,7 @@ jobs:
         with:
           browser: chrome
           headless: true
-          spec: cypress/integration/scrap-gb.js
+          spec: cypress/integration/{{$NAME}}.js
         continue-on-error: true
+        env:
+          SPEC: ${{ github.event.inputs.name }}
