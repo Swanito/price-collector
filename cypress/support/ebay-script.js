@@ -27,66 +27,70 @@ const search = (platformName, fileUrl) => {
                     cy.get(
                         '.x-refine__main__value > [name="LH_Sold"]',
                     ).click();
-                    if (cy.get('#srp-river-results > ul').length) {
-                        //iterate over the list
-                        cy.get('#srp-river-results > ul').each(($list) => {
-                            cy.wrap($list).within(() => {
-                                if ($list.find('li.s-item').length) {
-                                    cy.get('li.s-item').each(($listItem) => {
-                                        cy.wrap($listItem).within(() => {
-                                            //get the title
-                                            cy.get('.s-item__title').then((gameTitle) => {
-                                                //check if title includes the game
-                                                const titleText = gameTitle.text();
-                                                if (titleText.includes(game)) {
-                                                    gameModel.adTitle = titleText;
-                                                    //get the price
-                                                    if ($listItem.find('.s-item__price').length) {
-                                                        cy.wait(waitTime);
-                                                        cy.get('.s-item__price').then((gamePrice) => {
-                                                            gameModel.price = gamePrice.text();
-                                                        });
-                                                    }
-                                                    //get the shipping cost
-                                                    if ($listItem.find('.s-item__shipping').length) {
-                                                        cy.wait(waitTime);
-                                                        cy.get('.s-item__shipping').then((gameShipping) => {
-                                                            gameModel.shipping = gameShipping.text();
-                                                        });
-                                                    }
-                                                    //get the selling date
-                                                    if ($listItem.find('.s-item__title--tagblock').length) {
-                                                        cy.wait(waitTime);
-                                                        cy.get('.s-item__title--tagblock').then((gameDate) => {
-                                                            gameModel.sellingDate = gameDate.text();
-                                                        });
-                                                    }
-                                                    //get location
-                                                    if ($listItem.find('.s-item__location').length) {
-                                                        cy.wait(waitTime);
-                                                        cy.get('.s-item__location').then((gameLocation) => {
-                                                            gameModel.location = gameLocation.text();
-                                                        });
-                                                    }
 
-                                                    gameModel.game = game;
+                    cy.url().then((url) => {
+                        if (!url.includes('/captcha')) {
+                            //iterate over the list
+                            cy.get('#srp-river-results > ul').each(($list) => {
+                                cy.wrap($list).within(() => {
+                                    if ($list.find('li.s-item').length) {
+                                        cy.get('li.s-item').each(($listItem) => {
+                                            cy.wrap($listItem).within(() => {
+                                                //get the title
+                                                cy.get('.s-item__title').then((gameTitle) => {
+                                                    //check if title includes the game
+                                                    const titleText = gameTitle.text();
+                                                    if (titleText.includes(game)) {
+                                                        gameModel.adTitle = titleText;
+                                                        //get the price
+                                                        if ($listItem.find('.s-item__price').length) {
+                                                            cy.wait(waitTime);
+                                                            cy.get('.s-item__price').then((gamePrice) => {
+                                                                gameModel.price = gamePrice.text();
+                                                            });
+                                                        }
+                                                        //get the shipping cost
+                                                        if ($listItem.find('.s-item__shipping').length) {
+                                                            cy.wait(waitTime);
+                                                            cy.get('.s-item__shipping').then((gameShipping) => {
+                                                                gameModel.shipping = gameShipping.text();
+                                                            });
+                                                        }
+                                                        //get the selling date
+                                                        if ($listItem.find('.s-item__title--tagblock').length) {
+                                                            cy.wait(waitTime);
+                                                            cy.get('.s-item__title--tagblock').then((gameDate) => {
+                                                                gameModel.sellingDate = gameDate.text();
+                                                            });
+                                                        }
+                                                        //get location
+                                                        if ($listItem.find('.s-item__location').length) {
+                                                            cy.wait(waitTime);
+                                                            cy.get('.s-item__location').then((gameLocation) => {
+                                                                gameModel.location = gameLocation.text();
+                                                            });
+                                                        }
 
-                                                    if (gameModel.adTitle && !gameArray.includes(gameModel)) {
-                                                        gameArray.push(gameModel);
+                                                        gameModel.game = game;
+
+                                                        if (gameModel.adTitle && !gameArray.includes(gameModel)) {
+                                                            gameArray.push(gameModel);
+                                                        }
+                                                        if (gameArray.length > 0) {
+                                                            cy.insertMany(gameArray, 'games', 'testdb').then(res => {
+                                                                cy.log(res); // print the id of inserted document
+                                                            });
+                                                        }
                                                     }
-                                                    if (gameArray.length > 0) {
-                                                        cy.insertMany(gameArray, 'games', 'testdb').then(res => {
-                                                            cy.log(res); // print the id of inserted document
-                                                        });
-                                                    }
-                                                }
+                                                });
                                             });
                                         });
-                                    });
-                                }
+                                    }
+                                });
                             });
-                        });
-                    }
+                        }
+                    });
+
                 }
             });
         }
