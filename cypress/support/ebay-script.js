@@ -13,6 +13,7 @@ const search = (platformName, fileUrl) => {
         for (const key in games.games) {
             const game = games.games[key];
             cy.findMany({ game, sampleDate: date }, 'games', 'testdb').then((res) => {
+                cy.task('log', `STORED GAME ${res}`);
                 if (res.length === 0) {
                     gameModel.game = game;
                     const fullCriteria = `${platformName} ${game}`;
