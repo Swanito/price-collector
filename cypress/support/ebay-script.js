@@ -88,6 +88,10 @@ const search = (platformName, fileUrl) => {
                                     }
                                 });
                             });
+                        } else {
+                            cy.log('*************************************');
+                            cy.log('********* CAPTCHA ACTIVATED *********');
+                            cy.log('*************************************');
                         }
                     });
 
