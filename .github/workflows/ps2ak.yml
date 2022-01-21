@@ -19,7 +19,7 @@ on:
         default: "scrap-ps2ak"
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -38,7 +38,7 @@ jobs:
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - name: Cypress run PS2 AK
-        timeout-minutes: 15
+        timeout-minutes: 5
         uses: cypress-io/github-action@v2
         with:
           spec: cypress/integration/scrap-ps2ak.js
