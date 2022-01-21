@@ -72,15 +72,12 @@ const search = (platformName, fileUrl) => {
                                                 }
 
                                                 gameModel.game = game;
-
-                                                if (gameModel.adTitle && !gameArray.includes(gameModel)) {
+                                                if (!gameArray.includes(gameModel)) {
                                                     gameArray.push(gameModel);
                                                 }
-                                                if (gameArray.length > 0) {
-                                                    cy.insertMany(gameArray, 'games', 'testdb').then(res => {
-                                                        console.log(res); // print the id of inserted document
-                                                    });
-                                                }
+                                                cy.insertMany(gameArray, 'games', 'testdb').then(res => {
+                                                    console.log(res); // print the id of inserted document
+                                                });
                                             }
                                         });
                                     });
