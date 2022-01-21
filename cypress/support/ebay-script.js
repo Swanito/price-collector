@@ -7,6 +7,7 @@ const search = (platformName, fileUrl) => {
     const gameArray = [];
     const waitTime = 50;
 
+    cy.visit('https://www.ebay.es/');
 
     cy.readFile(fileUrl).then(async (games) => {
         for (const key in games.games) {
@@ -15,7 +16,6 @@ const search = (platformName, fileUrl) => {
                 if (res.length === 0) {
                     gameModel.game = game;
                     const fullCriteria = `${platformName} ${game}`;
-                    cy.visit('https://www.ebay.es/');
                     //search
                     cy.get('#gh-ac').clear().type(fullCriteria, { force: true });
                     cy.get('#gh-btn').click();
