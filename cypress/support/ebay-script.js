@@ -13,7 +13,7 @@ const search = (platformName, fileUrl) => {
         for (const key in games.games) {
             const game = games.games[key];
             cy.findMany({ game, sampleDate: date }, 'games', 'testdb').then((res) => {
-                cy.task('log', `STORED GAME ${res}`);
+                cy.task('log', `STORED GAME ${JSON.stringify(res)}`);
                 if (res.length === 0) {
                     gameModel.game = game;
                     const fullCriteria = `${platformName} ${game}`;
@@ -76,7 +76,7 @@ const search = (platformName, fileUrl) => {
                                                     gameArray.push(gameModel);
                                                 }
                                                 cy.insertMany(gameArray, 'games', 'testdb').then(res => {
-                                                    console.log(res); // print the id of inserted document
+                                                    cy.task('log', `${res} STORED`);
                                                 });
                                             }
                                         });
