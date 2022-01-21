@@ -6,6 +6,6 @@ describe('ebay', () => {
     });
 
     it('Searches for NES', () => {
-        Search('NESr', './input-files/nes.json');
+        Search('NES', './input-files/nes.json');
     });
 });
