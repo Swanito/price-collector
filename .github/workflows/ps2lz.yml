@@ -37,9 +37,16 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
-      - name: Cypress run GB
+      - name: Cypress run PS2 LZ
         timeout-minutes: 15
         uses: cypress-io/github-action@v2
         with:
           spec: cypress/integration/scrap-ps2lz.js
         continue-on-error: true
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@latest
+        if: failure()
+        with:
+          name: cypress-snapshots
+          path: cypress/snapshots
