@@ -18,6 +18,7 @@ const search = (platformName, fileUrl) => {
                     cy.visit(`https://www.ebay.es/sch/i.html?_nkw=${fullCriteria.replaceAll(' ', '\+')}&LH_PrefLoc=1&LH_Sold=1&LH_Complete=1&rt=nc&LH_All=1`);
                     //iterate over the list
                     cy.url().then(url => {
+                        cy.log(url);
                         if (url.includes('/captcha') && cy.get('#srp-river-results > ul').length) {
                             cy.get('#srp-river-results > ul').each(($list) => {
                                 cy.wrap($list).within(() => {
