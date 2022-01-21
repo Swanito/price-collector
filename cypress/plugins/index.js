@@ -21,4 +21,10 @@ module.exports = (on, config) => {
     // `on` is used to hook into various events Cypress emits
     // `config` is the resolved Cypress config
     mongo.configurePlugin(on);
+    on('task', {
+        log(msg) {
+            console.log(msg);
+            return null;
+        },
+    });
 };

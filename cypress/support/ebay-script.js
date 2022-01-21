@@ -17,7 +17,7 @@ const search = (platformName, fileUrl) => {
                     gameModel.game = game;
                     const fullCriteria = `${platformName} ${game}`;
                     //search
-                    console.log(`SEARCHING ${fullCriteria}`);
+                    cy.task('log', `CHECKING ${game}`);
                     cy.get('#gh-ac').clear().type(fullCriteria, { force: true });
                     cy.get('#gh-btn').click();
                     //filter by country
