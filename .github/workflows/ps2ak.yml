@@ -42,10 +42,3 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           spec: cypress/integration/scrap-ps2ak.js
-
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-snapshots
-          path: cypress/snapshots
