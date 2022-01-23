@@ -44,7 +44,7 @@ jobs:
           spec: cypress/integration/scrap-nes.js
         continue-on-error: true
         env:
-          CYPRESS_INITIAL_INDEX: 0
+          CYPRESS_INITIAL_INDEX: 200
           
       - name: Upload artifact
         if: failure()
