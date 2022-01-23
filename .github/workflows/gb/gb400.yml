@@ -45,6 +45,8 @@ jobs:
         with:
           spec: cypress/integration/scrap-gb.js
         continue-on-error: true
+        env:
+          CYPRESS_INITIAL_INDEX: 400
 
       - name: Upload artifact
         if: failure()

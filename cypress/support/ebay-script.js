@@ -1,6 +1,8 @@
 const dateFormat = require('dateformat');
 
-const search = (platformName, fileUrl) => {
+const search = (platformName, fileUrl, initialIndex = 0) => {
+    cy.task('log', `STARTING INDEX ${initialIndex}`);
+
     const timestamp = Date.now();
     const date = dateFormat(timestamp, 'dd-mm-yyyy');
     const gameModel = { game: null, platform: platformName, adTitle: null, price: null, shipping: null, sellingDate: null, location: null, sampleTimestamp: timestamp, sampleDate: date };
@@ -10,10 +12,10 @@ const search = (platformName, fileUrl) => {
     cy.visit('https://www.ebay.es/');
 
     cy.readFile(fileUrl).then(async (games) => {
-        for (const key in games.games) {
-            const game = games.games[key];
+        for (let i = initialIndex; i <= games.games.length; i++) {
+            const game = games.games[i];
             cy.findMany({ game, sampleDate: date }, 'games', 'testdb').then((res) => {
-                cy.task('log', `STORED GAME ${JSON.stringify(res)}`);
+                cy.task('log', `IS GAME STORED ${res.length > 0}`);
                 if (res.length === 0) {
                     gameModel.game = game;
                     const fullCriteria = `${platformName} ${game}`;
