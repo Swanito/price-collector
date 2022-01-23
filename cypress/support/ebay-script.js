@@ -62,7 +62,7 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
                                                 if ($listItem.find('div.s-item__subtitle > span.SECONDARY_INFO').length) {
                                                     cy.wait(waitTime);
                                                     cy.get('div.s-item__subtitle > span.SECONDARY_INFO').then((secondaryInfo) => {
-                                                        gameModel.seondaryInfo = secondaryInfo.text();
+                                                        gameModel.secondaryInfo = secondaryInfo.text();
                                                     });
                                                 }                                                
                                                 //get the selling date
