@@ -5,7 +5,7 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
 
     const timestamp = Date.now();
     const date = dateFormat(timestamp, 'dd-mm-yyyy');
-    const gameModel = { game: null, platform: platformName, adTitle: null, price: null, shipping: null, sellingDate: null, location: null, sampleTimestamp: timestamp, sampleDate: date };
+    const gameModel = { game: null, platform: platformName, adTitle: null, secondaryInfo: null, price: null, shipping: null, sellingDate: null, location: null, sampleTimestamp: timestamp, sampleDate: date };
     const gameArray = [];
     const waitTime = 50;
 
@@ -58,10 +58,17 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
                                                         gameModel.shipping = gameShipping.text();
                                                     });
                                                 }
-                                                //get the selling date
-                                                if ($listItem.find('.s-item__title--tagblock').length) {
+                                                //get the secondary info
+                                                if ($listItem.find('div.s-item__subtitle > span.SECONDARY_INFO').length) {
                                                     cy.wait(waitTime);
-                                                    cy.get('.s-item__title--tagblock').then((gameDate) => {
+                                                    cy.get('div.s-item__subtitle > span.SECONDARY_INFO').then((secondaryInfo) => {
+                                                        gameModel.seondaryInfo = secondaryInfo.text();
+                                                    });
+                                                }                                                
+                                                //get the selling date
+                                                if ($listItem.find('.s-item__title--tagblock > span.POSITIVE').length) {
+                                                    cy.wait(waitTime);
+                                                    cy.get('.s-item__title--tagblock > span.POSITIVE').then((gameDate) => {
                                                         gameModel.sellingDate = gameDate.text();
                                                     });
                                                 }
@@ -78,7 +85,7 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
                                                     gameArray.push(gameModel);
                                                 }
                                                 cy.insertMany(gameArray, 'games', 'testdb').then(res => {
-                                                    cy.task('log', `${res} STORED`);
+                                                    cy.task('log', `${JSON.stringify(res)} STORED`);
                                                 });
                                             }
                                         });
