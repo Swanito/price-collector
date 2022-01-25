@@ -2,7 +2,6 @@
 
 name: NES 000
 
-
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -20,7 +19,7 @@ on:
         default: "scrap-nes"
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: "*/5 * * * *"
+    - cron: "*/15 * * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -39,7 +38,7 @@ jobs:
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
       - name: Cypress run NES
-        timeout-minutes: 5
+        timeout-minutes: 15
         uses: cypress-io/github-action@v2
         with:
           spec: cypress/integration/scrap-nes.js
