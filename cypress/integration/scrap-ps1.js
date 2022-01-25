@@ -5,7 +5,7 @@ describe('ebay', () => {
         return false;
     });
 
-    it('Searches for PS1 MZ', () => {
-        Search('Playstation 1', './input-files/ps1mz.json');
+    it('Searches for PS1', () => {
+        Search('Playstation 1', './input-files/ps1.json');
     });
 });

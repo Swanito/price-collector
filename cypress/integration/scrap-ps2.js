@@ -5,7 +5,7 @@ describe('ebay', () => {
         return false;
     });
 
-    it('Searches for PS2 LZ', () => {
-        Search('Playstation 2', './input-files/ps2lz.json');
+    it('Searches for PS2', () => {
+        Search('Playstation 2', './input-files/ps2.json');
     });
 });

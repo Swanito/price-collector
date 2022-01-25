@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Playstation 2 A to K
+name: Playstation 1
 
 # Controls when the workflow will run
 on:
@@ -16,7 +16,7 @@ on:
       name:
         description: "spec file"
         required: true
-        default: "scrap-ps2ak"
+        default: "scrap-ps1al"
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron: "*/5 * * * *"
@@ -37,11 +37,11 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
-      - name: Cypress run PS2 AK
+      - name: Cypress run PS1 AL
         timeout-minutes: 5
         uses: cypress-io/github-action@v2
         with:
-          spec: cypress/integration/scrap-ps2ak.js
+          spec: cypress/integration/scrap-ps1.js
         continue-on-error: true
 
       - name: Upload artifact
