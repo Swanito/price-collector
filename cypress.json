@@ -1,6 +1,7 @@
 {
   "projectId": "v6jo48",
   "video": false,
+  "screenshotOnRunFailure": false,
   "env": {
     "CYPRESS_INITIAL_INDEX": 100
   }
