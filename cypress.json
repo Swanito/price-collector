@@ -1,8 +1,7 @@
 {
-    "projectId": "v6jo48",
-    "video": false,
-    "env": {
-        "MONGODB_URI": "mongodb+srv://admin:admin@cluster0.gel6e.mongodb.net/testdb?retryWrites=true&w=majority",
-        "CYPRESS_INITIAL_INDEX": 100
-      }
+  "projectId": "v6jo48",
+  "video": false,
+  "env": {
+    "CYPRESS_INITIAL_INDEX": 100
+  }
 }
