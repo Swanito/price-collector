@@ -8,11 +8,7 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      name:
-        description: "spec file"
-        required: true
-        default: "scrap-ps2ak"
+
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron: "*/30 * * * *"
@@ -39,6 +35,9 @@ jobs:
         with:
           spec: cypress/integration/scrap-ps2.js
         continue-on-error: true
+        env:
+          CYPRESS_INITIAL_INDEX: 000
+          CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Upload artifact
         if: failure()
