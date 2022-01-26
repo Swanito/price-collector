@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
         env:
           CYPRESS_INITIAL_INDEX: 500
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Upload artifact
         if: failure()
