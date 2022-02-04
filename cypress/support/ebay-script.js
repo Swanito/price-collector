@@ -14,7 +14,7 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
     cy.readFile(fileUrl).then(async (games) => {
         for (let i = initialIndex; i <= games.games.length; i++) {
             const game = games.games[i];
-            cy.findMany({ game, sampleDate: date }, 'games', 'testdb').then((res) => {
+            cy.findMany({ game, sampleDate: date }, 'games-raw', 'testdb').then((res) => {
                 cy.task('log', `IS GAME STORED ${res.length > 0}`);
                 if (res.length === 0) {
                     gameModel.game = game;
@@ -64,7 +64,7 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
                                                     cy.get('div.s-item__subtitle > span.SECONDARY_INFO').then((secondaryInfo) => {
                                                         gameModel.secondaryInfo = secondaryInfo.text();
                                                     });
-                                                }                                                
+                                                }
                                                 //get the selling date
                                                 if ($listItem.find('.s-item__title--tagblock > span.POSITIVE').length) {
                                                     cy.wait(waitTime);
@@ -84,7 +84,7 @@ const search = (platformName, fileUrl, initialIndex = 0) => {
                                                 if (!gameArray.includes(gameModel)) {
                                                     gameArray.push(gameModel);
                                                 }
-                                                cy.insertMany(gameArray, 'games', 'testdb').then(res => {
+                                                cy.insertMany(gameArray, 'games-raw', 'testdb').then(res => {
                                                     cy.task('log', `${JSON.stringify(res)} STORED`);
                                                 });
                                             }
