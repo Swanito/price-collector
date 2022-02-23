@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Playstation 1
+name: Playstation 1 450
 
 # Controls when the workflow will run
 on:
@@ -36,7 +36,7 @@ jobs:
           spec: cypress/integration/scrap-ps1.js
         continue-on-error: true
         env:
-          CYPRESS_INITIAL_INDEX: 000
+          CYPRESS_INITIAL_INDEX: 450
           CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Upload artifact
