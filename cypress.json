@@ -3,6 +3,7 @@
   "video": false,
   "screenshotOnRunFailure": false,
   "env": {
+    "MONGODB_URI": "mongodb+srv://admin:admin@cluster0.gel6e.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-5kwtah-shard-0&w=majority&readPreference=primary&retryWrites=true&ssl=true",
     "CYPRESS_INITIAL_INDEX": 100
   }
 }
