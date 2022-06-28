@@ -38,6 +38,10 @@ def collect(path):
     for game in data['games']:
         stored_game = collection.find({"game": game, "sampleDate": date})
 
+        buttons = driver.find_elements(By.CSS_SELECTOR, '#gdpr-banner-accept')
+        for button in buttons:
+            button.click()
+
         if len(list(stored_game)) == 0:
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable(
                 (By.CSS_SELECTOR, '#gh-ac'))).clear()
