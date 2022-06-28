@@ -32,16 +32,16 @@ def collect(path):
 
     driver.get('https://www.ebay.es')
 
-    buttons = driver.find_elements(By.CSS_SELECTOR, '#gdpr-banner-accept')
-    for button in buttons:
-        button.click()
-
     now = datetime.now()
     date = now.strftime('%d-%m-%Y')
 
     for game in data['games']:
         print('Searching '+game)
         stored_game = collection.find({"game": game, "sampleDate": date})
+
+        buttons = driver.find_elements(By.CSS_SELECTOR, '#gdpr-banner-accept')
+        for button in buttons:
+            button.click()
 
         if len(list(stored_game)) == 0:
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable(
