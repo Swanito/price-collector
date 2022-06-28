@@ -21,8 +21,14 @@ def collect(path):
         data = json.load(dc)
 
     driver_path = './chromedriver_linux'
-
-    driver = webdriver.Chrome(driver_path)
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('disable-infobars')
+    options.add_argument("--disable-extensions")
+    driver = webdriver.Chrome(driver_path, options=options)
 
     driver.get('https://www.ebay.es')
 
