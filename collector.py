@@ -10,7 +10,7 @@ import pandas as pd
 import json as json
 import pymongo
 
-mongo_uri = environ("MONGO_URI")
+mongo_uri = environ["MONGO_URI"]
 mongoClient = pymongo.MongoClient(mongo_uri)
 database = mongoClient["testdb"]
 collection = database["games-raws"]
