@@ -20,7 +20,7 @@ def collect(path):
     with open('./input-files/'+path, 'r') as dc:
         data = json.load(dc)
 
-    driver_path = './chromedriver'
+    driver_path = './chromedriver_linux'
 
     driver = webdriver.Chrome(driver_path)
 
