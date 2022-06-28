@@ -25,11 +25,13 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner.
       - name: setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8 #install the python needed
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pandas pymongo 'pymongo[srv]'
       - name: execute py script # run the run.py to get the latest data
         run: |
-          python collector.py
+          python3 collector.py
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
