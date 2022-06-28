@@ -36,6 +36,7 @@ def collect(path):
     date = now.strftime('%d-%m-%Y')
 
     for game in data['games']:
+        print('Searching '+game)
         stored_game = collection.find({"game": game, "sampleDate": date})
 
         buttons = driver.find_elements(By.CSS_SELECTOR, '#gdpr-banner-accept')
@@ -95,8 +96,12 @@ def collect(path):
 
                 if item_info['price'] != '':
                     collection.insert_one(item_info)
+                    print(game + ' sample stored!')
+        else:
+            print(game+' is already stored')
 
 
 files = listdir('./input-files')
 for file in files:
+    print('Current file '+file)
     collect(file)
