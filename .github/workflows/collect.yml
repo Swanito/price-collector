@@ -11,7 +11,7 @@ on:
 
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: "*/30 * * * *"
+    - cron: "0 */6 * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -49,7 +49,7 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting MegaDrive
         run: |
-          python3 collector.py md.json
+          python3 collector.py mega-drive.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting NES
