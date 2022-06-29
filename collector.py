@@ -11,8 +11,6 @@ import json as json
 import pymongo
 
 if __name__ == '__main__':
-    print(uc.find_chrome_executable())
-
     mongo_uri = environ["MONGODB_URI"]
     mongoClient = pymongo.MongoClient(mongo_uri)
     database = mongoClient["testdb"]
@@ -22,7 +20,7 @@ if __name__ == '__main__':
         with open('./input-files/'+path, 'r') as dc:
             data = json.load(dc)
 
-        driver = uc.Chrome(browser_executable_path='/bin/chromium')
+        driver = uc.Chrome(browser_executable_path=uc.find_chrome_executable())
 
         driver.get('https://www.ebay.es')
 
