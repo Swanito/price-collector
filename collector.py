@@ -8,11 +8,7 @@ from os import environ
 
 import json as json
 import pymongo
-
-mongo_uri = environ["MONGODB_URI"]
-mongoClient = pymongo.MongoClient(mongo_uri)
-database = mongoClient["testdb"]
-collection = database["games-raws"]
+import sys
 
 
 def collect(path):
@@ -27,6 +23,7 @@ def collect(path):
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('disable-infobars')
     options.add_argument("--disable-extensions")
+
     driver = webdriver.Chrome(driver_path, options=options)
 
     driver.get('https://www.ebay.es')
@@ -38,11 +35,13 @@ def collect(path):
         print('Searching '+game)
         stored_game = collection.find({"game": game, "sampleDate": date})
 
-        buttons = driver.find_elements(By.CSS_SELECTOR, '#gdpr-banner-accept')
-        for button in buttons:
-            button.click()
-
         if len(list(stored_game)) == 0:
+            buttons = driver.find_elements(By.CSS_SELECTOR, '#gdpr-banner')
+            # driver.save_screenshot('./screenshots/'+game+'.png')
+            if len(buttons) > 0:
+                button = driver.find_element(
+                    By.CSS_SELECTOR, '#gdpr-banner-accept')
+                button.click()
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable(
                 (By.CSS_SELECTOR, '#gh-ac'))).clear()
 
@@ -100,7 +99,18 @@ def collect(path):
             print(game+' is already stored')
 
 
+args = sys.argv
 files = listdir('./input-files')
-for file in files:
+
+if len(args) == 1 or args[1] not in files:
+    raise Exception(
+        "An argument must be provided indicating one of the following files to excecute: " + ', '.join(files))
+else:
+    mongo_uri = 'mongodb+srv://admin:admin@cluster0.gel6e.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-5kwtah-shard-0&w=majority&readPreference=primary&retryWrites=true&ssl=true'
+    mongoClient = pymongo.MongoClient(mongo_uri)
+    database = mongoClient["testdb"]
+    collection = database["games-raws"]
+    file = args[1]
+
     print('Current file '+file)
     collect(file)

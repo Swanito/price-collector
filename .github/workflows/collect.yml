@@ -32,8 +32,43 @@ jobs:
           python-version: 3.9.12
       - name: Install dependencies
         run: pip3 install selenium pymongo 'pymongo[srv]'
-      - name: execute py script # run the run.py to get the latest data
+      - name: Collecting Game Boy
         run: |
-          python3 collector.py
+          python3 collector.py game-boy.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting Game Boy Color
+        run: |
+          python3 collector.py game-boy-color.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting Dreamcast
+        run: |
+          python3 collector.py dc.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting MegaDrive
+        run: |
+          python3 collector.py md.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting NES
+        run: |
+          python3 collector.py nes.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting SNES
+        run: |
+          python3 collector.py snes.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting PlayStation
+        run: |
+          python3 collector.py ps1.json
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      - name: Collecting PlayStation 2
+        run: |
+          python3 collector.py ps2.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
