@@ -22,7 +22,7 @@ if __name__ == '__main__':
         with open('./input-files/'+path, 'r') as dc:
             data = json.load(dc)
 
-        driver = uc.Chrome(browser_executable_path='/usr/bin/google-chrome')
+        driver = uc.Chrome(browser_executable_path='/bin/chromium')
 
         driver.get('https://www.ebay.es')
 
