@@ -6,7 +6,6 @@ from datetime import datetime
 from os import listdir
 from os import environ
 
-import pandas as pd
 import json as json
 import pymongo
 
