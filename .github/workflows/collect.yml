@@ -22,6 +22,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner.
       - name: setup python
@@ -30,9 +32,6 @@ jobs:
           python-version: 3.9.12
       - name: Install dependencies
         run: pip3 install selenium pymongo 'pymongo[srv]' undetected_chromedriver
-      - name: Install Latest Chrome
-        uses: browser-actions/setup-chrome@latest
-        run: chrome --version
       - name: execute py script # run the run.py to get the latest data
         run: |
           python3 collector.py
