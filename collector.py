@@ -11,6 +11,8 @@ import json as json
 import pymongo
 
 if __name__ == '__main__':
+    print(uc.find_chrome_executable())
+
     mongo_uri = environ["MONGODB_URI"]
     mongoClient = pymongo.MongoClient(mongo_uri)
     database = mongoClient["testdb"]
