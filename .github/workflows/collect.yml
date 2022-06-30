@@ -33,41 +33,49 @@ jobs:
       - name: Install dependencies
         run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting Game Boy
+        continue-on-error: true
         run: |
           python3 collector.py game-boy.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting Game Boy Color
+        continue-on-error: true
         run: |
           python3 collector.py game-boy-color.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting Dreamcast
+        continue-on-error: true
         run: |
           python3 collector.py dc.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting MegaDrive
+        continue-on-error: true
         run: |
           python3 collector.py mega-drive.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting NES
+        continue-on-error: true
         run: |
           python3 collector.py nes.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting SNES
+        continue-on-error: true
         run: |
           python3 collector.py snes.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting PlayStation
+        continue-on-error: true
         run: |
           python3 collector.py ps1.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
       - name: Collecting PlayStation 2
+        continue-on-error: true
         run: |
           python3 collector.py ps2.json
         env:
