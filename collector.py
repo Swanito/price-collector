@@ -106,7 +106,7 @@ if len(args) == 1 or args[1] not in files:
     raise Exception(
         "An argument must be provided indicating one of the following files to excecute: " + ', '.join(files))
 else:
-    mongo_uri = 'mongodb+srv://admin:admin@cluster0.gel6e.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-5kwtah-shard-0&w=majority&readPreference=primary&retryWrites=true&ssl=true'
+    mongo_uri = environ["MONGODB_URI"]
     mongoClient = pymongo.MongoClient(mongo_uri)
     database = mongoClient["testdb"]
     collection = database["games-raws"]
