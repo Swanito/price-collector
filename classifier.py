@@ -2,7 +2,9 @@ import json as j
 import pandas as pd
 import re
 import numpy as np
+import pymongo
 
+from os import environ
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -10,6 +12,11 @@ from sklearn.svm import LinearSVC
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectKBest, chi2
+from datetime import datetime, timedelta
+
+
+def is_cartridge_platform(platform):
+    return platform in ['Game Boy', 'Game Boy Color', 'NES', 'SNES', 'SEGA MegaDrive']
 
 
 def classify(train_file, target_names):
@@ -56,9 +63,30 @@ def classify(train_file, target_names):
     return model
 
 
-model = classify(train_file='./data/train_disk.json', target_names=['REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME',
-                                                                    'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
+mongo_uri = environ["MONGODB_URI"]
+mongoClient = pymongo.MongoClient(mongo_uri)
+database = mongoClient["testdb"]
+collection = database["games-raws"]
 
+today = datetime. today()
+yesterday = today - timedelta(days=1)
+date = yesterday.strftime('%d-%m-%Y')
 
-print(model.predict(
-    ['Conflicto: tormenta Del Desierto | Playstation PS2 | completo | PAL']))
+stored_games = collection.find({"sampleDate": date})
+
+cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
+                           'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
+
+disk_model = classify(train_file='./data/train_cartridge.json', target_names=[
+    'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
+
+for game in stored_games:
+
+    if is_cartridge_platform(game["platform"]):
+        game["type"] = cartridge_model.predict([game['adTitle']])[0]
+    else:
+        game["type"] = disk_model.predict([game['adTitle']])[0]
+    print(game["adTitle"] + ' item type updated')
+    collection.replace_one({'_id': game['_id']}, game, True)
+
+print('Classification completed.')
