@@ -31,7 +31,9 @@ jobs:
         with:
           python-version: 3.9.12
       - name: Install dependencies
-        run: pip3 install selenium pymongo 'pymongo[srv]'
+        run: pip3 install selenium pymongo 'pymongo[srv]' panda nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
       - name: Clasiffy
         run: |
           python3 classifier.py
