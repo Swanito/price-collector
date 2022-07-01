@@ -63,7 +63,7 @@ def classify(train_file, target_names):
     return model
 
 
-mongo_uri = environ["MONGODB_URI"]
+mongo_uri = "mongodb+srv://admin:admin@cluster0.gel6e.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-5kwtah-shard-0&w=majority&readPreference=primary&retryWrites=true&ssl=true"
 mongoClient = pymongo.MongoClient(mongo_uri)
 database = mongoClient["testdb"]
 collection = database["games-raws"]
@@ -72,16 +72,18 @@ today = datetime. today()
 yesterday = today - timedelta(days=1)
 date = yesterday.strftime('%d-%m-%Y')
 
-stored_games = collection.find({"sampleDate": date, "type": {'$ne': None}})
+stored_games = collection.find({"sampleDate": date, "type": {'$eq': None}})
 
+print('Training cartridge classifier...')
 cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
                            'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
 
+print('Training disk classifier...')
 disk_model = classify(train_file='./data/train_cartridge.json', target_names=[
     'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
 
 for game in stored_games:
-
+    print(game)
     if is_cartridge_platform(game["platform"]):
         game["type"] = cartridge_model.predict([game['adTitle']])[0]
     else:
