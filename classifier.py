@@ -83,7 +83,7 @@ disk_model = classify(train_file='./data/train_cartridge.json', target_names=[
     'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
 
 for game in stored_games:
-    print(game)
+
     if is_cartridge_platform(game["platform"]):
         game["type"] = cartridge_model.predict([game['adTitle']])[0]
     else:
