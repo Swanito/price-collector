@@ -72,7 +72,7 @@ today = datetime. today()
 yesterday = today - timedelta(days=1)
 date = yesterday.strftime('%d-%m-%Y')
 
-stored_games = collection.find({"sampleDate": date})
+stored_games = collection.find({"sampleDate": date, "type": {'$ne': None}})
 
 cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
                            'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
@@ -86,7 +86,7 @@ for game in stored_games:
         game["type"] = cartridge_model.predict([game['adTitle']])[0]
     else:
         game["type"] = disk_model.predict([game['adTitle']])[0]
-    print(game["adTitle"] + ' item type updated')
+
     collection.replace_one({'_id': game['_id']}, game, True)
 
 print('Classification completed.')
