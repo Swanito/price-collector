@@ -63,10 +63,10 @@ def classify(train_file, target_names):
     return model
 
 
-mongo_uri = "mongodb+srv://admin:admin@cluster0.gel6e.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-5kwtah-shard-0&w=majority&readPreference=primary&retryWrites=true&ssl=true"
+mongo_uri = environ["MONGODB_URI"]
 mongoClient = pymongo.MongoClient(mongo_uri)
-database = mongoClient["testdb"]
-collection = database["games-raws"]
+database = mongoClient[environ["DB"]]
+collection = database[environ["COLLECTION_NAME"]]
 
 today = datetime. today()
 yesterday = today - timedelta(days=1)

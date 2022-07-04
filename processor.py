@@ -17,9 +17,9 @@ import blacklist
 
 mongo_uri = environ["MONGODB_URI"]
 mongoClient = pymongo.MongoClient(mongo_uri)
-database = mongoClient["testdb"]
-raw_collection = database["games-raws"]
-processed_collection = database["games-processeds"]
+database = mongoClient[environ["DB"]]
+raw_collection = database[environ["COLLECTION_NAME"]]
+processed_collection = database[environ["P_COLLECTION_NAME"]]
 
 
 def get_unique_platforms_from_list(records):

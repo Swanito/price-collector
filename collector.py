@@ -26,7 +26,7 @@ def collect(path):
 
     driver = webdriver.Chrome(driver_path, options=options)
 
-    driver.get('https://www.ebay.es')
+    driver.get(environ["URL"])
 
     now = datetime.now()
     date = now.strftime('%d-%m-%Y')
@@ -108,8 +108,8 @@ if len(args) == 1 or args[1] not in files:
 else:
     mongo_uri = environ["MONGODB_URI"]
     mongoClient = pymongo.MongoClient(mongo_uri)
-    database = mongoClient["testdb"]
-    collection = database["games-raws"]
+    database = mongoClient[environ["DB"]]
+    collection = database[environ["COLLECTION_NAME"]]
     file = args[1]
 
     print('Current file '+file)
