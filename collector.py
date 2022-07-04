@@ -107,9 +107,11 @@ if len(args) == 1 or args[1] not in files:
         "An argument must be provided indicating one of the following files to excecute: " + ', '.join(files))
 else:
     mongo_uri = environ["MONGODB_URI"]
+    db_name = environ["DB_NAME"]
+    collection_name = environ["COLLECTION_NAME"]
     mongoClient = pymongo.MongoClient(mongo_uri)
-    database = mongoClient[environ["DB_NAME"]]
-    collection = database[environ["COLLECTION_NAME"]]
+    database = mongoClient[db_name]
+    collection = database[collection_name]
     file = args[1]
 
     print('Current file '+file)
