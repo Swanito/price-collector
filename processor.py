@@ -17,7 +17,7 @@ import blacklist
 
 mongo_uri = environ["MONGODB_URI"]
 mongoClient = pymongo.MongoClient(mongo_uri)
-database = mongoClient[environ["DB"]]
+database = mongoClient[environ["DB_NAME"]]
 raw_collection = database[environ["COLLECTION_NAME"]]
 processed_collection = database[environ["P_COLLECTION_NAME"]]
 

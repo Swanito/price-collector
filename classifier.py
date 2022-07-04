@@ -65,7 +65,7 @@ def classify(train_file, target_names):
 
 mongo_uri = environ["MONGODB_URI"]
 mongoClient = pymongo.MongoClient(mongo_uri)
-database = mongoClient[environ["DB"]]
+database = mongoClient[environ["DB_NAME"]]
 collection = database[environ["COLLECTION_NAME"]]
 
 today = datetime. today()

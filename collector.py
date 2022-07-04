@@ -108,7 +108,7 @@ if len(args) == 1 or args[1] not in files:
 else:
     mongo_uri = environ["MONGODB_URI"]
     mongoClient = pymongo.MongoClient(mongo_uri)
-    database = mongoClient[environ["DB"]]
+    database = mongoClient[environ["DB_NAME"]]
     collection = database[environ["COLLECTION_NAME"]]
     file = args[1]
 
