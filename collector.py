@@ -26,7 +26,7 @@ def collect(path):
 
     driver = webdriver.Chrome(driver_path, options=options)
 
-    driver.get(environ["URL"])
+    driver.get("http://www.ebay.es")
 
     now = datetime.now()
     date = now.strftime('%d-%m-%Y')
