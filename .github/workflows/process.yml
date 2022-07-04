@@ -32,8 +32,6 @@ jobs:
           python-version: 3.9.12
       - name: Install dependencies
         run: pip3 install pymongo 'pymongo[srv]' statistics scipy datetime numpy
-      - name: Download stopwords
-        run: python3 -m nltk.downloader stopwords
       - name: Process
         run: |
           python3 classifier.py
