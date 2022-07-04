@@ -65,8 +65,8 @@ def classify(train_file, target_names):
 
 mongo_uri = environ["MONGODB_URI"]
 mongoClient = pymongo.MongoClient(mongo_uri)
-database = mongoClient[environ["DB_NAME"]]
-collection = database[environ["COLLECTION_NAME"]]
+database = mongoClient["testdb"]
+collection = database["games-raws"]
 
 today = datetime. today()
 yesterday = today - timedelta(days=1)
