@@ -34,6 +34,6 @@ jobs:
         run: pip3 install pymongo 'pymongo[srv]' statistics scipy datetime numpy
       - name: Process
         run: |
-          python3 classifier.py
+          python3 processor.py
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
