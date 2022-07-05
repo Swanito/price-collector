@@ -73,7 +73,7 @@ yesterday = today - timedelta(days=1)
 date = yesterday.strftime('%d-%m-%Y')
 
 stored_games = collection.find(
-    {"sampleDate": date, "type": {'$eq': None}}, no_cursor_timeout=True)
+    {"sampleDate": date, "type": {'$eq': None}})
 
 print('Training cartridge classifier...')
 cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
