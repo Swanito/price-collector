@@ -11,21 +11,16 @@ on:
 
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: "0 1 * * *"
+    - cron: "0 */6 * * *"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  processN:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
       - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner.
+        uses: actions/checkout@v2
       - name: setup python
         uses: actions/setup-python@v4
         with:
@@ -34,6 +29,42 @@ jobs:
         run: pip3 install pymongo 'pymongo[srv]' statistics scipy datetime numpy
       - name: Process
         run: |
-          python3 processor.py
+          python3 processor.py 'Game Boy','Game Boy Color','SNES','NES'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  processS:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' statistics scipy datetime numpy
+      - name: Process
+        run: |
+          python3 processor.py "SEGA MegaDrive","SEGA Dreamcast"
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  processP:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' statistics scipy datetime numpy
+      - name: Process
+        run: |
+          python3 processor.py "PlayStation 1","PlayStation 2"
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}

@@ -10,6 +10,7 @@
 #
 import pymongo
 import statistics
+import sys
 from scipy import stats
 from datetime import datetime, timedelta
 from os import environ
@@ -78,8 +79,7 @@ def remove_blacklisted_from_samples(records, platform):
 
 records = get_last_records()
 
-platforms = ['Game Boy', 'Game Boy Color', 'SNES', 'NES',
-             'PlayStation 1', 'PlayStation 2', 'SEGA MegaDrive', 'SEGA Dreamcast']
+platforms = sys.argv[1].split(',')
 
 print('Processing from date -> ' + get_date())
 print('Processing platforms: ')
