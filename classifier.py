@@ -32,7 +32,8 @@ def classify(train_file, target_names):
     stemmer = SnowballStemmer('english')
 
     words = stopwords.words("english")
-    print(data['adTitle'])
+    data['adTitle'] = data['adTitle'].replace('{', '')
+    data['adTitle'] = data['adTitle'].replace('}', '')
     data['cleaned'] = data['adTitle'].apply(lambda x: " ".join([stemmer.stem(
         i) for i in re.sub("[^a-zA-Z]", " ", x or '').split() if i not in words]).lower())
 
