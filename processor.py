@@ -61,8 +61,8 @@ def format_prices(samples):
     array = []
     for sample in samples:
         format_string = sample.replace('GBP ', '')
-        format_string = sample.replace('USD', '')
-        format_string = sample.split()[0]
+        format_string = format_string.replace('USD', '')
+        format_string = format_string.split()[0]
         format_string = format_string.replace('.', '')
         format_string = format_string.replace(',', '.')
         array.append(float(format_string))

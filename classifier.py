@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import numpy as np
 import pymongo
+import sys
 
 from os import environ
 from nltk.corpus import stopwords
@@ -72,8 +73,10 @@ collection = database["games-raws"]
 now = datetime.now()
 date = now.strftime('%d-%m-%Y')
 
+platform = platforms = sys.argv[1].split(',')
+
 stored_games = collection.find(
-    {"sampleDate": date, "type": {'$eq': None}})
+    {"sampleDate": date, "platform": {'$in': platforms}, "type": {'$eq': None}})
 
 print('Training cartridge classifier...')
 cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
