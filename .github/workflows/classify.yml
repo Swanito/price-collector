@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  disk:
+  dc:
     runs-on: ubuntu-latest
     steps:
       - uses: browser-actions/setup-chrome@latest
@@ -32,10 +32,10 @@ jobs:
         run: python3 -m nltk.downloader stopwords
       - name: Clasiffy
         run: |
-          python3 classifier.py 'SEGA Dreamcast','PlayStation 1','PlayStation 2'
+          python3 classifier.py 'SEGA Dreamcast'
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-  cartridge:
+  ps1:
     runs-on: ubuntu-latest
     steps:
       - uses: browser-actions/setup-chrome@latest
@@ -52,6 +52,126 @@ jobs:
         run: python3 -m nltk.downloader stopwords
       - name: Clasiffy
         run: |
-          python3 classifier.py 'Game Boy','Game Boy Color','SNES','NES','SEGA MegaDrive'
+          python3 classifier.py 'PlayStation 1'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  ps2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' pandas nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
+      - name: Clasiffy
+        run: |
+          python3 classifier.py 'PlayStation 2'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  gb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' pandas nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
+      - name: Clasiffy
+        run: |
+          python3 classifier.py 'Game Boy'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  gbc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' pandas nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
+      - name: Clasiffy
+        run: |
+          python3 classifier.py 'Game Boy Color'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  snes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' pandas nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
+      - name: Clasiffy
+        run: |
+          python3 classifier.py 'SNES'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  nes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' pandas nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
+      - name: Clasiffy
+        run: |
+          python3 classifier.py 'NES'
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  md:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install pymongo 'pymongo[srv]' pandas nltk sklearn numpy
+      - name: Download stopwords
+        run: python3 -m nltk.downloader stopwords
+      - name: Clasiffy
+        run: |
+          python3 classifier.py 'SEGA MegaDrive'
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
