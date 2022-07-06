@@ -116,6 +116,7 @@ for platform in platforms:
                     processed_collection.insert_one(object)
                     for sample in samples:
                         sample['isProcessed'] = True
-                        raw_collection.replace_one(sample)
+                        raw_collection.replace_one(
+                            {'_id': sample['_id']}, sample, True)
 
     print('Finished processing ' + platform)
