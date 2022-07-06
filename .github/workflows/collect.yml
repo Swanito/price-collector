@@ -15,12 +15,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  gb:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
@@ -38,42 +34,133 @@ jobs:
           python3 collector.py game-boy.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  gbc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting Game Boy Color
         continue-on-error: true
         run: |
           python3 collector.py game-boy-color.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  dc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting Dreamcast
         continue-on-error: true
         run: |
           python3 collector.py dc.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  md:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting MegaDrive
         continue-on-error: true
         run: |
           python3 collector.py mega-drive.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  nes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting NES
         continue-on-error: true
         run: |
           python3 collector.py nes.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  snes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting SNES
         continue-on-error: true
         run: |
           python3 collector.py snes.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  ps1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting PlayStation
         continue-on-error: true
         run: |
           python3 collector.py ps1.json
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  ps2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: pip3 install selenium pymongo 'pymongo[srv]'
       - name: Collecting PlayStation 2
         continue-on-error: true
         run: |
