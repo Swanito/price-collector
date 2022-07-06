@@ -63,6 +63,8 @@ def get_last_records():
 def format_prices(samples):
     array = []
     for sample in samples:
+        format_string = format_string.replace('GBP ', '')
+        format_string = format_string.replace('USD', '')
         format_string = sample.split()[0]
         format_string = format_string.replace('.', '')
         format_string = format_string.replace(',', '.')
@@ -81,7 +83,8 @@ def remove_blacklisted_from_samples(records, platform):
 records = get_last_records()
 
 platforms = get_unique_platforms_from_list(records)
-print(platforms)
+print('Processing from date -> ' + get_date())
+print('Processing platforms -> ' + platforms)
 for platform in platforms:
     print('Starting processing ' + platform)
     games = get_games_from_platform(records=records, platform=platform)
@@ -111,5 +114,6 @@ for platform in platforms:
                             'medianPrice': statistics.median(prices_from_samples)
                         }
                     }
-                    processed_collection.insert_one(object)
+                    print(object)
+                    # processed_collection.insert_one(object)
     print('Finished processing ' + platform)
