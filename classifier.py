@@ -68,9 +68,8 @@ mongoClient = pymongo.MongoClient(mongo_uri)
 database = mongoClient["testdb"]
 collection = database["games-raws"]
 
-today = datetime. today()
-yesterday = today - timedelta(days=1)
-date = yesterday.strftime('%d-%m-%Y')
+now = datetime.now()
+date = now.strftime('%d-%m-%Y')
 
 stored_games = collection.find(
     {"sampleDate": date, "type": {'$eq': None}})

@@ -84,7 +84,8 @@ records = get_last_records()
 
 platforms = get_unique_platforms_from_list(records)
 print('Processing from date -> ' + get_date())
-print('Processing platforms -> ' + platforms)
+print('Processing platforms: ')
+print(platforms)
 for platform in platforms:
     print('Starting processing ' + platform)
     games = get_games_from_platform(records=records, platform=platform)
