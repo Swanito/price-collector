@@ -34,7 +34,7 @@ def classify(train_file, target_names):
     words = stopwords.words("english")
 
     data['cleaned'] = data['adTitle'].apply(lambda x: " ".join([stemmer.stem(
-        i) for i in re.sub("[^a-zA-Z]", " ", x).split() if i not in words]).lower())
+        i) for i in re.sub("[^a-zA-Z]", " ", x or '').split() if i not in words]).lower())
 
     x_train, x_test, y_train, y_test = train_test_split(
         data['cleaned'], data.type, test_size=0.2)
