@@ -57,7 +57,7 @@ def get_date():
 
 
 def get_last_records():
-    return list(raw_collection.find({"sampleDate": '29-06-2022', "type": {'$nin': [None, 'NOT_A_GAME', 'BUNDLE', 'PC']}}))
+    return list(raw_collection.find({"sampleDate": get_date(), "type": {'$nin': [None, 'NOT_A_GAME', 'BUNDLE', 'PC']}}))
 
 
 def format_prices(samples):
