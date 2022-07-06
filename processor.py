@@ -22,10 +22,6 @@ raw_collection = database["games-raws"]
 processed_collection = database["games-processeds"]
 
 
-def get_unique_platforms_from_list(records):
-    return {record["platform"] for record in records}
-
-
 def get_unique_games_from_list(records):
     return {record["game"] for record in records}
 
@@ -57,14 +53,14 @@ def get_date():
 
 
 def get_last_records():
-    return list(raw_collection.find({"sampleDate": get_date(), "type": {'$nin': [None, 'NOT_A_GAME', 'BUNDLE', 'PC']}}))
+    return raw_collection.find({"sampleDate": get_date(), 'isProcessed': {'$ne': True}, "type": {'$nin': [None, 'NOT_A_GAME', 'BUNDLE', 'PC']}})
 
 
 def format_prices(samples):
     array = []
     for sample in samples:
-        format_string = format_string.replace('GBP ', '')
-        format_string = format_string.replace('USD', '')
+        format_string = sample.replace('GBP ', '')
+        format_string = sample.replace('USD', '')
         format_string = sample.split()[0]
         format_string = format_string.replace('.', '')
         format_string = format_string.replace(',', '.')
@@ -77,12 +73,14 @@ def format_prices(samples):
 
 def remove_blacklisted_from_samples(records, platform):
     blacklisted_words = blacklist.get_blacklist(platform=platform)
-    return [x for x in records if any(w in x["adTitle"] for w in blacklisted_words)]
+    return [x for x in records if any(w not in x["adTitle"] for w in blacklisted_words)]
 
 
 records = get_last_records()
 
-platforms = get_unique_platforms_from_list(records)
+platforms = ['Game Boy', 'Game Boy Color', 'SNES', 'NES',
+             'PlayStation 1', 'PlayStation 2', 'SEGA MegaDrive', 'SEGA Dreamcast']
+
 print('Processing from date -> ' + get_date())
 print('Processing platforms: ')
 print(platforms)
@@ -94,7 +92,7 @@ for platform in platforms:
         samples = get_samples_from_list(records=games, game=unique)
         samples = remove_blacklisted_from_samples(
             records=samples, platform=platform)
-        types = get_unique_types_from_list(records=records)
+        types = get_unique_types_from_list(records=samples)
         for type in types:
             if type != 'NOT_A_GAME' and type != 'BUNDLE' and type != 'PC':
                 samples_for_type = get_samples_for_type(
@@ -115,6 +113,9 @@ for platform in platforms:
                             'medianPrice': statistics.median(prices_from_samples)
                         }
                     }
-                    print(object)
-                    # processed_collection.insert_one(object)
+                    processed_collection.insert_one(object)
+                    for sample in samples:
+                        sample['isProcessed'] = True
+                        raw_collection.replace_one(sample)
+
     print('Finished processing ' + platform)
