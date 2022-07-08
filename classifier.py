@@ -19,7 +19,6 @@ from datetime import datetime, timedelta
 def is_cartridge_platform(platform):
     return platform in ['Game Boy', 'Game Boy Color', 'NES', 'SNES', 'SEGA MegaDrive']
 
-
 def classify(train_file, target_names):
     json_data = None
     with open(train_file) as data_file:
@@ -78,18 +77,20 @@ platform = platforms = sys.argv[1].split(',')
 stored_games = collection.find(
     {"sampleDate": date, "platform": {'$in': platforms}, "type": {'$eq': None}})
 
+print('Training cartridge classifier...')
+cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
+    'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
+
+print('Training disk classifier...')
+disk_model = classify(train_file='./data/train_cartridge.json', target_names=[
+    'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
+
 for game in stored_games:
     print('Predicting ' + game["game"])
 
     if is_cartridge_platform(game["platform"]):
-        print('Training cartridge classifier...')
-        cartridge_model = classify(train_file='./data/train_cartridge.json', target_names=[
-            'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
         game["type"] = cartridge_model.predict([game['adTitle']])[0]
     else:
-        print('Training disk classifier...')
-        disk_model = classify(train_file='./data/train_cartridge.json', target_names=[
-            'REPRO', 'NOT_A_GAME', 'BUNDLE', 'GRADED', 'SEALED', 'CIB', 'BOX_AND_GAME', 'MANUAL_AND_GAME', 'BOX', 'MANUAL', 'BOX_AND_MANUAL', 'GAME'])
         game["type"] = disk_model.predict([game['adTitle']])[0]
 
     collection.replace_one({'_id': game['_id']}, game, True)
