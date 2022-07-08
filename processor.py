@@ -94,6 +94,7 @@ for platform in platforms:
             records=samples, platform=platform)
         types = get_unique_types_from_list(records=samples)
         for type in types:
+            print('Processing ' + unique + ' type ' + type)
             if type != 'NOT_A_GAME' and type != 'BUNDLE' and type != 'PC':
                 samples_for_type = get_samples_for_type(
                     records=samples, type=type)

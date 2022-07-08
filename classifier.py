@@ -79,6 +79,7 @@ stored_games = collection.find(
     {"sampleDate": date, "platform": {'$in': platforms}, "type": {'$eq': None}})
 
 for game in stored_games:
+    print('Predicting ' + game["game"])
 
     if is_cartridge_platform(game["platform"]):
         print('Training cartridge classifier...')
